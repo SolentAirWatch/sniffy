@@ -1,6 +1,6 @@
+# Simple example of reading the MCP3008 analog input channels and printin# them all out.
 # Author Joshua Taylor
-# License: GPLv3
-
+# License: Public Domain
 # import  standard libraries for timing, csv and udp coms
 import time
 import csv
@@ -30,7 +30,7 @@ while True:
     values = [0.0]*8
     for i in range(8):
         # The read_adc function will get the value of the specified channel (0-7).
-        values[i] = mcp.read_adc(i) * (Vref / (2.0**ADCbits)) * 1000.0
+        values[i] = mcp.read_adc(i)* (Vref / (2.0**ADCbits)) * 1000.0
         
     # Print the ADC values.
     message = {'timestamp': str(datetime.datetime.now()),
@@ -41,14 +41,14 @@ while True:
         'TEMP': values[4],
         'VREF': values[5]}
     
-    print('===============\n'.
+    print('===============\n'
         'timestamp :{}\n'
-        'NO2 WE (mv): {}\n'
-        'NO2 AE (mv) : {}\n'
-        'SO2 WE (mv): {}\n'
-        'SO2 AE (mv): {}\n'
-        'TEMP (mv): {}\n'
-        'VREF (mv): {}\n'.format(message['timestamp'], message['NO2WE'], message['NO2AE'], message['SO2WE'],
+        'NO2 WE: {}\n'
+        'NO2 AE: {}\n'
+        'SO2 WE: {}\n'
+        'SO2 AE: {}\n'
+        'TEMP: {}\n'
+        'VREF: {}\n'.format(message['timestamp'], message['NO2WE'], message['NO2AE'], message['SO2WE'],
                                 message['SO2AE'], message['TEMP'], message['VREF']))
                                 
     w.writerow(values) # write the current line to CSV
