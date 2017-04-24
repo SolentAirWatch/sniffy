@@ -52,6 +52,12 @@ This includes the scipts for the analogue gas sensors which interface via the MC
 
 This will install the current dependances.
 
-The monitor currently runs seperate scripts for each sensor. These send data to a SQL via UDP. This is tempoary until we migrate to MQTT. To run the scripts 
+The monitor currently runs seperate scripts for each sensor. These send data to a SQL via UDP. This is tempoary until we migrate to MQTT. To run the scripts.
 
-python 
+# Important scripts
+
+   ppm.py this sends PM data from the PMS1003 senosr to the SQL server via UDP
+   2_sensorAFE_v1.py    same but for analogue sensor data
+   bmp180.py            likewise - for the bosch BMP180 enviroment chip
+   pms1003_IOT.py       outputs PMS1003 data onscreen and uploads to opensensors.io using MQTT
+   
