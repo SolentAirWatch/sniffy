@@ -26,7 +26,7 @@ Find the IP address of your Pi. The easiest way is through your home router. The
 
 The PM sensor uses the serial port, this requires turning off the console. Do this by running
 
-    sudo raspi-conf
+    sudo raspi-config
 
 Go to /Interfacing Options/Serial answer no to a login shell and yes to the serial port being enabled. You will be prompted to reboot.
 
