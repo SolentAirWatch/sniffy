@@ -44,7 +44,7 @@ while True: # replace with timed polling
             '$PM25_CF1': ord(rcv[6]) * 256 + ord(rcv[7]),
             '$PM100_CF1': ord(rcv[8]) * 256 + ord(rcv[9]),
             '$PM10_STD': ord(rcv[10]) * 256 + ord(rcv[11]),
-            '$PM25_STD': 0.01*(ord(rcv[12]) * 256 + ord(rcv[13])),
+            '$PM25_STD': ord(rcv[12]) * 256 + ord(rcv[13]),
             '$PM100_STD': ord(rcv[14]) * 256 + ord(rcv[15]),
             '$gr03um': ord(rcv[16]) * 256 + ord(rcv[17]),
             '$gt05um': ord(rcv[18]) * 256 + ord(rcv[19]),
