@@ -5,6 +5,9 @@ import json
 import socket
 import csv
 
+# imput a sensor number here
+sensorID = 1
+
 # setup onboard serial port NB RPi 3 address
 port = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2.0)
 remote_PORT = 33333;
@@ -38,6 +41,7 @@ while True: # replace with timed polling
 
 
         res = {
+            '_sid': sensorID,
             '_type': 'pm',
             '$timestamp': str(datetime.datetime.now()),
             '$PM10': ord(rcv[4]) * 256 + ord(rcv[5]),
