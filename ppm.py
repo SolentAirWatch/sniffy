@@ -6,12 +6,12 @@ import socket
 import csv
 
 # imput a sensor number here
-sensorID = 1
+sensorID = 4
 
 # setup onboard serial port NB RPi 3 address
 port = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2.0)
 remote_PORT = 33333;
-remote_HOST = '138.68.134.165'
+remote_HOST = '46.101.13.195'
 csvFile="/home/pi/AirQuality/client/pm.log"
 w = csv.writer(open(csvFile,'a'),dialect='excel')
 local_PORT = 33333
