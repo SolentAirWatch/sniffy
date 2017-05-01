@@ -33,7 +33,7 @@ Go to /Interfacing Options/Serial answer no to a login shell and yes to the seri
 The monitor is in the early stages of development, this means things can change. Because of this it is recommneded to use a virtual environement. The install script assumes you have python 2.7 and pip installed. If you need to install it run the following:
 
     sudo apt-get update
-    sudo apt-get install -y python python-pip python3-pip virtualenv git build-essential python-dev python-smbus
+    sudo apt-get install -y python-pip git build-essential python-dev python-smbus
     
 Create a python 2.7 environment using
 
