@@ -56,7 +56,7 @@ To start the monitor when the pi boots
 then add the following line (currently starts PM monitor only)
 NB script assumes that your not using virtualenv.
 
-    /home/pi/monitor_v1/sniffy.sh >/home/pi/logs/cronlog 2>&1
+    @reboot sh /home/pi/monitor_v1/sniffy.sh >/home/pi/logs/cronlog 2>&1
     
 
 # Important scripts
