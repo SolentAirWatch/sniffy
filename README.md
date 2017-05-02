@@ -35,24 +35,29 @@ The monitor is in the early stages of development, this means things can change.
     sudo apt-get update
     sudo apt-get install -y python-pip git build-essential python-dev python-smbus
     
-Create a python 2.7 environment using
+For development - create and activate a python 2.7 environment using
 
-    virtualenv -p python2 environmentName
-
-activate the virtual environement using
-
-    source ./environmentName/bin/activate
+    virtualenv -p python2 sniffyPy2Env
+    source ./sniffyPy2Env/bin/activate
 
 To install the latest monitor scripts clone the reposetory and run
 
     git clone https://github.com/hantsairquality/monitor_v1/
-    .monitor_v1/install.sh
+    ./monitor_v1/install.sh
     
 This includes the scipts for the analogue gas sensors which interface via the MCP3008 ADC chip on the SPI bus.
 
-This will install the current dependances.
-
 The monitor currently runs seperate scripts for each sensor. These send data to a SQL via UDP. This is tempoary until we migrate to MQTT. To run the scripts.
+
+To start the monitor when the pi boots 
+    
+    sudo crontab -e
+
+then add the following line (currently starts PM monitor only)
+NB script assumes that your not using virtualenv.
+
+    /home/pi/monitor_v1/sniffy.sh >/home/pi/logs/cronlog 2>&1
+    
 
 # Important scripts
 
