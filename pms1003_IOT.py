@@ -4,8 +4,8 @@ import datetime
 import paho.mqtt.client as mqtt
 import json
 
-mqttc = mqtt.Client(client_id="5721")
-mqttc.username_pw_set("josh", password="lmNh8CI5")
+mqttc = mqtt.Client(client_id="****")
+mqttc.username_pw_set("****", password="****")
 mqttc.connect("mqtt.opensensors.io")
 
 # setup onboard serial port NB RPi 3 address
