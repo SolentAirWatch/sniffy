@@ -5,14 +5,14 @@ import json
 import socket
 import csv
 
-# imput a sensor number here
-sensorID = 4
+
+sensorID = 4 # Imput a sensor number here 
 
 # setup onboard serial port NB RPi 3 address
 port = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2.0)
 remote_PORT = 33333;
-remote_HOST = '46.101.13.195'
-csvFile="/home/pi/AirQuality/client/pm.log"
+remote_HOST = '46.101.13.195' # IP of cloud server
+csvFile="/home/pi/AirQuality/client/pm.log" # keep a local copy for debug
 w = csv.writer(open(csvFile,'a'),dialect='excel')
 local_PORT = 33333
 local_HOST = '10.15.40.221'
@@ -30,19 +30,17 @@ def read_pm_line(_port):
 
 # initalise variables
 loop = 0
-# rcv_list = []
 
-while True: # replace with timed polling
+while True: # PMSx003 sensor by default streams data and non-uniform intervals - replace with timed polling
     try:
         print("trying to read")
         rcv = read_pm_line(port)
         print("is reading")
-# probably a more 'python' way of doing this
-
-
+        
+        #  The following needs updating to work on python 3
         res = {
-            '_sid': sensorID,
-            '_type': 'pm',
+            '_sid': sensorID, # move to static data
+            '_type': 'pm', # move to static data
             '$timestamp': str(datetime.datetime.now()),
             '$PM10': ord(rcv[4]) * 256 + ord(rcv[5]),
             '$PM25_CF1': ord(rcv[6]) * 256 + ord(rcv[7]),
@@ -58,26 +56,6 @@ while True: # replace with timed polling
             '$gr100um': ord(rcv[26]) * 256 + ord(rcv[27])
             }
 
-        # convert message to JSON
-        # actual numbers in names only (name)/10
-
-        # message = ('===============\n'
-        #     '$timestamp :{}'
-        #     '$PM10 : {}'
-        #     '$PM25_CF1: {}'
-        #     '$PM10_CF1: {}'
-        #     '$PM10_STD: {}'
-        #     '$PM25_STD: {}'
-        #     '$PM100_STD: {}'
-        #     '$gr03um     : {}'
-        #     '$gr05um     : {}'
-        #     '$gr10um     : {}'
-        #     '$gr25um     : {}'
-        #     '$gr50um     : {}'
-        #     '$gr10um      : {}'.format(res['timestamp'], res['apm10'], res['apm25'], res['apm100'],
-        #                             res['pm10'], res['pm25'], res['pm100'],
-        #                             res['gt03um'], res['gt05um'], res['gt10um'],
-        #                             res['gt25um'], res['gt50um'], res['gt100um']))
         message = json.dumps(res)
         print(message)
         w.writerow(message)
