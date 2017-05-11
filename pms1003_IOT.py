@@ -1,3 +1,16 @@
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#(at your option) any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+
+#You should have received a copy of the GNU General Public License
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 import serial
 import time
 import datetime
@@ -11,7 +24,7 @@ mqttc.connect("mqtt.opensensors.io")
 # setup onboard serial port NB RPi 3 address
 port = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2.0)
 
-# function to read a line of serial data
+# function to read 28 bytes of serial data
 def read_pm_line(_port):
     rv = b''
     while True:
@@ -30,9 +43,6 @@ rcv_list = []
 while True: # replace with timed polling
     try:
         rcv = read_pm_line(port)
-# probably a more 'python' way of doing this        
-        
-        
         res = {'timestamp': str(datetime.datetime.now()),
             'apm10': ord(rcv[4]) * 256 + ord(rcv[5]),
             'apm25': ord(rcv[6]) * 256 + ord(rcv[7]),
