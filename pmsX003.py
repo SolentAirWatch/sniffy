@@ -4,6 +4,7 @@ import time
 import datetime
 import json
 import csv
+from pprint import pprint  # makes data more pretty
 
 # add a config file which is unique to each sniffy.
 sensorID = 1 # Imput a sensor number here 
@@ -84,10 +85,10 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
             '$gr50um': ord(rcv[24]) * 256 + ord(rcv[25]),
             '$gr100um': ord(rcv[26]) * 256 + ord(rcv[27])
             }
-        print(message)
+        pprint(json.dumps(message))
         client.publish(topic, payload=json.dumps(message), qos=0, retain=False)
         client.loop()
-        w.writerow(message)
+        w.writerow(json.dumps(message))
         time.sleep(0.1) # wait 100 millisonds
 
     except KeyboardInterrupt:
