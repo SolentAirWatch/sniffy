@@ -48,6 +48,7 @@ def read_pm_line(_port):
                 return rv
 
 # set up objects
+f = open(csvFile,'wb')
 client = mqtt.Client(client_id="6421")
 client.username_pw_set("solentairwatch", password="oIVRMg3R")
 client.on_connect = on_connect
@@ -63,12 +64,12 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
         # print("is reading")
         #  The following needs updating to work on python 3
         message = {
+            'time': str(datetime.datetime.now()),
             'id': monitorID,
             'cityName': "Southampton",
             'stationName': "Common#1",
             'latitude': monitorLocation[0],
             'longitude': monitorLocation[1],
-            'time': str(datetime.datetime.now()),
             'averaging': 0,
             'PM1': ord(rcv[4]) * 256 + ord(rcv[5]),
             'PM25': ord(rcv[6]) * 256 + ord(rcv[7]),
@@ -86,9 +87,8 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
         #pprint(message)
         client.publish(topic, payload=json.dumps(message), qos=0, retain=False)
         client.loop()
-        with open(csvFile,'wb') as f:
-            w = csv.DictWriter(f, message.keys())
-            w.writerow(message)
+        w = csv.DictWriter(f, message.keys())
+        w.writerow(message)
         
         time.sleep(0.1) # wait 100 millisonds
 
