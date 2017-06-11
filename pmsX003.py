@@ -28,7 +28,7 @@ def on_connect(client, userdata, rc):
 
 def on_publish(client, userdata, mid):
     print(mid)
-    print('published a message')
+    # print('published a message')
     pass
 
 
@@ -61,9 +61,9 @@ client.loop()
 
 while True: # PMSx003 sensor by default streams data and non-uniform intervals - replace with timed polling
     try:
-        print("trying to read")
+        #print("trying to read")
         rcv = read_pm_line(port)
-        print("is reading")
+        # print("is reading")
         #  The following needs updating to work on python 3
         message = {
             'id': monitorID,
