@@ -73,18 +73,18 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
             'longitude': monitorLocation[1],
             'time': str(datetime.datetime.now()),
             'averaging': 0,
-            'PM10': ord(rcv[4]) * 256 + ord(rcv[5]),
+            'PM1': ord(rcv[4]) * 256 + ord(rcv[5]),
             'PM25': ord(rcv[6]) * 256 + ord(rcv[7]),
-            'PM100_CF1': ord(rcv[8]) * 256 + ord(rcv[9]),
-            'PM10_STD': ord(rcv[10]) * 256 + ord(rcv[11]),
-            'PM25_STD': ord(rcv[12]) * 256 + ord(rcv[13]),
-            'PM100_STD': ord(rcv[14]) * 256 + ord(rcv[15]),
-            'gr03um': ord(rcv[16]) * 256 + ord(rcv[17]),
-            'gt05um': ord(rcv[18]) * 256 + ord(rcv[19]),
-            'gr10um': ord(rcv[20]) * 256 + ord(rcv[21]),
-            'gr25um': ord(rcv[22]) * 256 + ord(rcv[23]),
-            'gr50um': ord(rcv[24]) * 256 + ord(rcv[25]),
-            'gr100um': ord(rcv[26]) * 256 + ord(rcv[27])
+            'PM10_CF1': ord(rcv[8]) * 256 + ord(rcv[9]),
+            #'PM10_STD': ord(rcv[10]) * 256 + ord(rcv[11]),
+            #'PM25_STD': ord(rcv[12]) * 256 + ord(rcv[13]),
+            #'PM100_STD': ord(rcv[14]) * 256 + ord(rcv[15]),
+            #'gr03um': ord(rcv[16]) * 256 + ord(rcv[17]),
+            #'gt05um': ord(rcv[18]) * 256 + ord(rcv[19]),
+            #'gr10um': ord(rcv[20]) * 256 + ord(rcv[21]),
+            #'gr25um': ord(rcv[22]) * 256 + ord(rcv[23]),
+            #'gr50um': ord(rcv[24]) * 256 + ord(rcv[25]),
+            #'gr100um': ord(rcv[26]) * 256 + ord(rcv[27])
             }
         pprint(message)
         client.publish(topic, payload=json.dumps(message), qos=0, retain=False)
