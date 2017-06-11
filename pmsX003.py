@@ -86,7 +86,7 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
             #'gr50um': ord(rcv[24]) * 256 + ord(rcv[25]),
             #'gr100um': ord(rcv[26]) * 256 + ord(rcv[27])
             }
-        pprint(message)
+        #pprint(message)
         client.publish(topic, payload=json.dumps(message), qos=0, retain=False)
         client.loop()
         w.writerow(json.dumps(message))
