@@ -48,7 +48,6 @@ def read_pm_line(_port):
                 return rv
 
 # set up objects
-csvWriter = csv.writer(open(csvFile,'a'),dialect='excel')
 client = mqtt.Client(client_id="6421")
 client.username_pw_set("solentairwatch", password="oIVRMg3R")
 client.on_connect = on_connect
@@ -87,10 +86,12 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
         #pprint(message)
         client.publish(topic, payload=json.dumps(message), qos=0, retain=False)
         client.loop()
-        w = csv.DictWriter(csvWriter, message.keys())
-        w.writeheader()
-        w.writerow(message)
+        with open(csvFile,'wb') as f:
+            w = csv.DictWriter(f, message.keys())
+            w.writerow(message)
+        
         time.sleep(0.1) # wait 100 millisonds
 
     except KeyboardInterrupt:
         break
+        
