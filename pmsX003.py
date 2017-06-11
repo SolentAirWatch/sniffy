@@ -1,5 +1,6 @@
 import serial
 import paho.mqtt.client as mqtt
+import time
 import datetime
 import json
 import csv
@@ -51,8 +52,8 @@ def read_pm_line(_port):
 
 # set up objects
 w = csv.writer(open(csvFile,'a'),dialect='excel')
-client = mqtt.Client(client_id="6435")
-client.username_pw_set("solentairwatch", password="IFwwJ6vO")
+client = mqtt.Client(client_id="6421")
+client.username_pw_set("solentairwatch", password="oIVRMg3R")
 client.loop()
 
 
@@ -69,7 +70,7 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
             'latitude': monitorLocation[0],
             'longitude': monitorLocation[1],
             'time': str(datetime.datetime.now()),
-            'averaging': 0
+            'averaging': 0,
             '$PM10': ord(rcv[4]) * 256 + ord(rcv[5]),
             '$PM25_CF1': ord(rcv[6]) * 256 + ord(rcv[7]),
             '$PM100_CF1': ord(rcv[8]) * 256 + ord(rcv[9]),
