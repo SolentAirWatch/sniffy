@@ -75,7 +75,7 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
             'averaging': 0,
             'PM1': ord(rcv[4]) * 256 + ord(rcv[5]),
             'PM25': ord(rcv[6]) * 256 + ord(rcv[7]),
-            'PM10_CF1': ord(rcv[8]) * 256 + ord(rcv[9]),
+            'PM10': ord(rcv[8]) * 256 + ord(rcv[9]),
             #'PM10_STD': ord(rcv[10]) * 256 + ord(rcv[11]),
             #'PM25_STD': ord(rcv[12]) * 256 + ord(rcv[13]),
             #'PM100_STD': ord(rcv[14]) * 256 + ord(rcv[15]),
