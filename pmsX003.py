@@ -18,8 +18,6 @@ monitorLocation = [50.9262, -1.4092]
 csvFile="/home/pi/AirQuality/client/pm.log" # keep a local copy for debug
 global t
 global ts
-t = 0
-ts = 1
 monitorLocation = [50.9262, -1.4092]
 
 def on_connect(client, userdata, rc):
@@ -55,6 +53,9 @@ def read_pm_line(_port):
 w = csv.writer(open(csvFile,'a'),dialect='excel')
 client = mqtt.Client(client_id="6421")
 client.username_pw_set("solentairwatch", password="oIVRMg3R")
+client.on_connect = on_connect
+client.on_publish = on_publish
+client.connect(broker)  # (address, port, timeout (sec) )
 client.loop()
 
 
@@ -72,18 +73,18 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
             'longitude': monitorLocation[1],
             'time': str(datetime.datetime.now()),
             'averaging': 0,
-            '$PM10': ord(rcv[4]) * 256 + ord(rcv[5]),
-            '$PM25_CF1': ord(rcv[6]) * 256 + ord(rcv[7]),
-            '$PM100_CF1': ord(rcv[8]) * 256 + ord(rcv[9]),
-            '$PM10_STD': ord(rcv[10]) * 256 + ord(rcv[11]),
-            '$PM25_STD': ord(rcv[12]) * 256 + ord(rcv[13]),
-            '$PM100_STD': ord(rcv[14]) * 256 + ord(rcv[15]),
-            '$gr03um': ord(rcv[16]) * 256 + ord(rcv[17]),
-            '$gt05um': ord(rcv[18]) * 256 + ord(rcv[19]),
-            '$gr10um': ord(rcv[20]) * 256 + ord(rcv[21]),
-            '$gr25um': ord(rcv[22]) * 256 + ord(rcv[23]),
-            '$gr50um': ord(rcv[24]) * 256 + ord(rcv[25]),
-            '$gr100um': ord(rcv[26]) * 256 + ord(rcv[27])
+            'PM10': ord(rcv[4]) * 256 + ord(rcv[5]),
+            'PM25': ord(rcv[6]) * 256 + ord(rcv[7]),
+            'PM100_CF1': ord(rcv[8]) * 256 + ord(rcv[9]),
+            'PM10_STD': ord(rcv[10]) * 256 + ord(rcv[11]),
+            'PM25_STD': ord(rcv[12]) * 256 + ord(rcv[13]),
+            'PM100_STD': ord(rcv[14]) * 256 + ord(rcv[15]),
+            'gr03um': ord(rcv[16]) * 256 + ord(rcv[17]),
+            'gt05um': ord(rcv[18]) * 256 + ord(rcv[19]),
+            'gr10um': ord(rcv[20]) * 256 + ord(rcv[21]),
+            'gr25um': ord(rcv[22]) * 256 + ord(rcv[23]),
+            'gr50um': ord(rcv[24]) * 256 + ord(rcv[25]),
+            'gr100um': ord(rcv[26]) * 256 + ord(rcv[27])
             }
         pprint(message)
         client.publish(topic, payload=json.dumps(message), qos=0, retain=False)
