@@ -87,8 +87,6 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
         #pprint(message)
         client.publish(topic, payload=json.dumps(message), qos=0, retain=False)
         client.loop()
-        for row in message
-        
         w = csv.DictWriter(csvWriter, message.keys())
         w.writeheader()
         w.writerow(message)
