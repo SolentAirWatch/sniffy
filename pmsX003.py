@@ -15,13 +15,11 @@ broker = "mqtt.opensensors.io"  # "46.101.13.195"     # test broker
 topic = "/orgs/solentairwatch/sniffy"
 monitorID = '2'  # id 0 is reserved for test
 monitorLocation = [50.9262, -1.4092]
-csvFile="/home/pi/AirQuality/client/pm.log" # keep a local copy for debug
-global t
-global ts
+csvFile = "PMSx003.csv" # keep a local copy for debug
 monitorLocation = [50.9262, -1.4092]
 
 def on_connect(client, userdata, rc):
-    print("Connected with result code "+str(rc))
+    print("Connected with result code " + str(rc))
     # do nothing we're connected
     pass
 
@@ -50,7 +48,7 @@ def read_pm_line(_port):
                 return rv
 
 # set up objects
-w = csv.writer(open(csvFile,'a'),dialect='excel')
+csvWriter = csv.writer(open(csvFile,'a'),dialect='excel')
 client = mqtt.Client(client_id="6421")
 client.username_pw_set("solentairwatch", password="oIVRMg3R")
 client.on_connect = on_connect
@@ -89,7 +87,11 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
         #pprint(message)
         client.publish(topic, payload=json.dumps(message), qos=0, retain=False)
         client.loop()
-        w.writerow(json.dumps(message))
+        for row in message
+        
+        w = csv.DictWriter(csvWriter, message.keys())
+        w.writeheader()
+        w.writerow(message)
         time.sleep(0.1) # wait 100 millisonds
 
     except KeyboardInterrupt:
