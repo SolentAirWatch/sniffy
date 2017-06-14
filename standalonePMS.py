@@ -45,6 +45,29 @@ def read_pm_line(_port):
 
 # set up objects
 f = open(csvFile,'wb')
+message = {
+	'time': str(datetime.datetime.now()),
+	'id': monitorID,
+	'cityName': "Southampton",
+	'stationName': "StJohn1",
+	'averaging': 0,
+        'latitude': monitorLocation[0],
+        'longitude': monitorLocation[1],
+	'PM1': 0,
+	'PM25': 0,
+	'PM10': 0,
+	'PM10_STD': 0,
+	'PM25_STD': 0,
+	'PM100_STD': 0,
+	'gr03um': 0,
+	'gt05um': 0,
+	'gr10um': 0,
+	'gr25um': 0,
+	'gr50um': 0,
+	'gr100um': 0}
+w = csv.DictWriter(f, message.keys())
+w.writeheader()
+
 
 while True: # PMSx003 sensor by default streams data and non-uniform intervals - replace with timed polling
     try:
@@ -73,9 +96,7 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
             'gr50um': ord(rcv[24]) * 256 + ord(rcv[25]),
             'gr100um': ord(rcv[26]) * 256 + ord(rcv[27])
             }
-        #pprint(message)
-        w = csv.DictWriter(f, message.keys())
-        writer.writeheader()
+        pprint(message)
         w.writerow(message)
         
         time.sleep(0.1) # wait 100 millisonds
