@@ -43,7 +43,7 @@ For development - create and activate a python 2.7 environment using
 To install the latest monitor scripts clone the reposetory and run
 
     git clone https://github.com/solentairwatch/sniffy
-    ./monitor_v1/install.sh
+    ./sniffy/install.sh
     
 This includes the scipts for the analogue gas sensors which interface via the MCP3008 ADC chip on the SPI bus.
 
