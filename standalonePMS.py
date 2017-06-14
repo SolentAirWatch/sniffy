@@ -44,7 +44,7 @@ def read_pm_line(_port):
                 return rv
 
 # set up objects
-f = open(csvFile,'wb')
+f = open(csvFile,'a')
 message = {
 	'time': str(datetime.datetime.now()),
 	'id': monitorID,
@@ -96,7 +96,7 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
             'gr50um': ord(rcv[24]) * 256 + ord(rcv[25]),
             'gr100um': ord(rcv[26]) * 256 + ord(rcv[27])
             }
-        pprint(message)
+        # pprint(message)
         w.writerow(message)
         
         time.sleep(0.1) # wait 100 millisonds
