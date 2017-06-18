@@ -48,7 +48,7 @@ def read_pm_line(_port):
                 return rv
 
 # set up objects
-f = open(csvFile,'wb')
+f = open(csvFile,'a')
 client = mqtt.Client(client_id="6421")
 client.username_pw_set("solentairwatch", password="oIVRMg3R")
 client.on_connect = on_connect
