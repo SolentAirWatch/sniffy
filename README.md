@@ -1,4 +1,4 @@
-# monitor_v1
+# Sniffy Monitor v1
 
 
 The scripts have been tested using Raspberry Pi 3 and Raspberry Pi Zero W with Rasbian Jessie Lite. This can be downloaded at
