@@ -11,7 +11,7 @@ https://www.raspberrypi.org/downloads/raspbian/.
 
 Currently only Python 2.7 is supported until the bitwise operations are updated to python 3.
 
-# The easy way to enable ssh and setup wireless
+# The easy way to enable ssh and setup wireless on the Raspberry Pi
 
 The boot partition is readable using a card reader with any opertating system. Create the file /boot/wpa_supplicant.conf. Add your wifi settings as follows:
 
