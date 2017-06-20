@@ -1,10 +1,15 @@
 # Sniffy Monitor v1
 
+Solent Air Watch is a community project run solely by volenteers with day jobs. Please help support us by suggesting improvements to our code or documentation. Build plans for the sniffy air quality monitor will be available soon at www.solentairwatch.co.uk
 
-The scripts have been tested using Raspberry Pi 3 and Raspberry Pi Zero W with Rasbian Jessie Lite. This can be downloaded at
+Sniffy is an air quality monitor based on the raspberry pi. It is designed to accept a number of different air quality sensors. We currently use the plantower PMS5003 to estimate concentrations of PM1, PM2.5 and PM10. We use Alphasense's range of gas sensors to measure NO2.
+
+Our current efforts are in developing the monitor to work reliably on public and private wifi and we're looking at extending to long range wireless networks (GSM, LTE, LoRaWAN and sigfox). The Sniffy communicates via MQTT to opensensors.io. This gives free opensource access to a ready made API. Our current priority is to implement a more scaleable backend to the sniffy monitor.
+
+The scripts in this repository have been tested using Raspberry Pi 3 and Raspberry Pi Zero W with Rasbian Jessie Lite. This can be downloaded at
 https://www.raspberrypi.org/downloads/raspbian/.
 
-Currently only Python 2.7 is supported until the bitwise operations are updated to support python 3.
+Currently only Python 2.7 is supported until the bitwise operations are updated to python 3.
 
 # The easy way to enable ssh and setup wireless
 
