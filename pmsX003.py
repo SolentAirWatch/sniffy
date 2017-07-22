@@ -6,9 +6,6 @@ import json
 import csv
 from pprint import pprint  # makes data more pretty
 
-# add a config file which is unique to each sniffy.
-sensorID = 2 # Imput a sensor number here 
-
 # setup onboard serial port NB RPi 3 address
 port = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2.0)
 broker = "mqtt.opensensors.io"  # "46.101.13.195"     # test broker
@@ -16,7 +13,6 @@ topic = "/orgs/solentairwatch/sniffy"
 monitorID = '2'  # id 0 is reserved for test
 monitorLocation = [50.9262, -1.4092]
 csvFile = "PMSx003.csv" # keep a local copy for debug
-monitorLocation = [50.9262, -1.4092]
 
 def on_connect(client, userdata, rc):
     print("Connected with result code " + str(rc))
