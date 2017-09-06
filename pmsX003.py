@@ -79,6 +79,7 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
             'time': str(datetime.datetime.now()),
             'id': monitorID,
             'cityName': "Southampton",
+            'stationName': "Common#1",
             'latitude': monitorLocation[0],
             'longitude': monitorLocation[1],
             'averaging': 0,
