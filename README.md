@@ -11,6 +11,8 @@ https://www.raspberrypi.org/downloads/raspbian/.
 
 Currently only Python 2.7 is supported until the bitwise operations are updated to python 3.
 
+The following instructions assume you have a fresh install of raspbian Lite and are not familiar with the Raspbery Pi.
+
 # The easy way to enable ssh and setup wireless on the Raspberry Pi
 
 The boot partition is readable using a card reader with any opertating system. Create the file /boot/wpa_supplicant.conf. Add your wifi settings as follows:
@@ -22,37 +24,37 @@ The boot partition is readable using a card reader with any opertating system. C
     }
 
 On the first boot raspbian will copy the file to the normal location (/etc/wpa_supplicant/wpa_supplicant.conf).
-To enable SSH on the raspberry pi, make an empty file named shh on the boot partition. 
+To enable SSH on the raspberry pi, copy an empty file named shh to the boot partition. 
 
 # Installing monitor software to Raspbery Pi
-Find the IP address of your Pi. The easiest way is through your home router. Then login using ssh.
+Find the IP address of your Pi. The easiest way is through your home router. Then login using ssh. The default password is raspberry.
 
     shh pi@<your ip address>
 
-The PM sensor uses the serial port, this requires turning off the console. Do this by running
+Firstly change the default password by typing 
+
+    passwd
+
+The PM sensor uses the serial port, the environmental sensor uses I2C and the ADC uses SPI. THese interfaces should be turned on using by running
 
     sudo raspi-config
 
-Go to /Interfacing Options/Serial answer no to a login shell and yes to the serial port being enabled. You will be prompted to reboot.
+Go to /Interfacing Options/Serial answer no to a login shell and yes to the serial port being enabled. Also turn on SPI and I2C. You will be prompted to reboot when you exit.
 
 The monitor is in the early stages of development, this means things can change. Because of this it is recommneded to use a virtual environement. The install script assumes you have python 2.7 and pip installed. If you need to install it run the following:
 
     sudo apt-get update
     sudo apt-get install -y python-pip git build-essential python-dev python-smbus
     
-For development - create and activate a python 2.7 environment using
-
-    virtualenv -p python2 sniffyPy2Env
-    source ./sniffyPy2Env/bin/activate
-
 To install the latest monitor scripts clone the reposetory and run
 
+    cd
     git clone https://github.com/solentairwatch/sniffy
     ./sniffy/install.sh
     
 This includes the scipts for the analogue gas sensors which interface via the MCP3008 ADC chip on the SPI bus.
 
-The monitor currently runs seperate scripts for each sensor. These send data to a SQL via UDP. This is tempoary until we migrate to MQTT. To run the scripts.
+The monitor currently runs seperate scripts for each sensor.
 
 To start the monitor when the pi boots 
     
