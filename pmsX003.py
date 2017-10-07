@@ -1,22 +1,21 @@
-import serial
-import paho.mqtt.client as mqtt
-import time
-import datetime
-import json
+import bme280  # driver for Bosche BME280 - local file
+import serial  # pyserial for Plantower PMS5003
+import paho.mqtt.client as mqtt  # MQTT stream to opensesors
+import time  # for sleep function
+import datetime  # for timestampping data
+import json 
 import csv
 from pprint import pprint  # makes data more pretty
 
 # setup onboard serial port NB RPi 3 address
-clientNo = "xxx"
-pwrd = "xxx"
-monitorID = '2'  # id 0 is reserved for test
+monitorID = '6'  # id 0 is reserved for test
 monitorLocation = [50.9262, -1.4092]
 port = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2.0)
 broker = "mqtt.opensensors.io"  # "46.101.13.195"     # test broker
 topic = "/orgs/solentairwatch/sniffy"
 csvFile = "PMSx003.csv" # keep a local copy for debug
 
-def on_connect(client, userdata, rc):
+def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
     # do nothing we're connected
     pass
@@ -46,16 +45,22 @@ def read_pm_line(_port):
                 rv += _port.read(28)
                 return rv
 
+def readBME():
+    temp, pres, humid = bme280.readBME280All()
+    temp = round(float(temp),1)
+    pres = round(float(pres),1)
+    humid = round(float(humid),1)
+    return (temp, pres, humid)
+
 # set up objects
 f = open(csvFile,'a')  # open the csv file but 'a'ppend it if it already exists
 # Authenticate with opensensors.io
-client = mqtt.Client(client_id=clientNo)
-client.username_pw_set("solentairwatch", password=pwrd)
+client = mqtt.Client(client_id="xxxx")
+client.username_pw_set("solentairwatch", password="xxxxx")
 # set up callbacks
 client.on_connect = on_connect
 client.on_publish = on_publish
 client.connect(broker)  # (address, port, timeout (sec) )
-
 
 # write a blank message to CSV so we can add headers at the start of the file
 message = {
@@ -77,7 +82,8 @@ client.loop_start()  # start the network loop
 while True: # PMSx003 sensor by default streams data and non-uniform intervals - replace with timed polling
     try:
         rcv = read_pm_line(port)
-        message = {
+        temp, pres, humid = readBME()
+	message = {
             'time': str(datetime.datetime.now()),
             'id': monitorID,
             'cityName': "Southampton",
@@ -88,7 +94,10 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
             'PM1': ord(rcv[4]) * 256 + ord(rcv[5]),
             'PM25': ord(rcv[6]) * 256 + ord(rcv[7]),
             'PM10': ord(rcv[8]) * 256 + ord(rcv[9]),
-            #'PM10_STD': ord(rcv[10]) * 256 + ord(rcv[11]),
+            'tempreature': temp,
+	    'pressure': pres,
+            'humidity': humid, 
+	    #'PM10_STD': ord(rcv[10]) * 256 + ord(rcv[11]),
             #'PM25_STD': ord(rcv[12]) * 256 + ord(rcv[13]),
             #'PM100_STD': ord(rcv[14]) * 256 + ord(rcv[15]),
             #'gr03um': ord(rcv[16]) * 256 + ord(rcv[17]),
@@ -98,7 +107,7 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
             #'gr50um': ord(rcv[24]) * 256 + ord(rcv[25]),
             #'gr100um': ord(rcv[26]) * 256 + ord(rcv[27])
             }
-        # pprint(message)
+        pprint(message)
         client.publish(topic, payload=json.dumps(message), qos=0, retain=False)
         w = csv.DictWriter(f, message.keys())
         w.writerow(message)
