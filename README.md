@@ -1,4 +1,4 @@
-# Sniffy Monitor v1
+# Sniffy Monitor
 
 Solent Air Watch is a community project run solely by volenteers with day jobs. Please help support us by suggesting improvements to our code or documentation. Build plans for the sniffy air quality monitor will be available soon at www.solentairwatch.co.uk
 
