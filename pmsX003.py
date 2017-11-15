@@ -8,11 +8,17 @@ import csv
 from pprint import pprint  # makes data more pretty
 
 # setup onboard serial port NB RPi 3 address
+
+#token = 'SharedAccessKey=NHnpLrSbcQ4j8GEvJ60oOvHbNlQyEpSmEL8Gh0MyFRU=' 
+#username = 'sniffy.azure-devices.net/sniffy-2/api-version=2016-11-14'
+
+
+clientID = 'sniffy-6'
 monitorID = '6'  # id 0 is reserved for test
 monitorLocation = [50.9262, -1.4092]
 port = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2.0)
-broker = "mqtt.opensensors.io"  # "46.101.13.195"     # test broker
-topic = "/orgs/solentairwatch/sniffy"
+broker = "139.162.227.142" #"mqtt.opensensors.io"  # "46.101.13.195"     # test broker
+topic = "mqtt-data" #"/orgs/solentairwatch/sniffy"
 csvFile = "PMSx003.csv" # keep a local copy for debug
 
 def on_connect(client, userdata, flags, rc):
@@ -55,8 +61,8 @@ def readBME():
 # set up objects
 f = open(csvFile,'a')  # open the csv file but 'a'ppend it if it already exists
 # Authenticate with opensensors.io
-client = mqtt.Client(client_id="xxxx")
-client.username_pw_set("solentairwatch", password="xxxxx")
+client = mqtt.Client(client_id=clientID)
+client.username_pw_set("mqtt-user", password="mqtt-password" )
 # set up callbacks
 client.on_connect = on_connect
 client.on_publish = on_publish
