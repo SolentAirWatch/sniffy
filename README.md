@@ -41,12 +41,12 @@ The PM sensor uses the serial port, the environmental sensor uses I2C and the AD
 
 Go to /Interfacing Options/Serial answer no to a login shell and yes to the serial port being enabled. Also turn on SPI and I2C. You will be prompted to reboot when you exit.
 
-The monitor is in the early stages of development, this means things can change. Because of this it is recommneded to use a virtual environement. The install script assumes you have python 2.7 and pip installed. If you need to install it run the following:
+The monitor is in the early stages of development, this means things can change. 
 
     sudo apt-get update
     sudo apt-get install -y python-pip git build-essential python-dev python-smbus
     
-To install the latest monitor scripts clone the reposetory and run
+To install the Sniffy monitor scripts clone the Sniffy repositary and run
 
     cd
     git clone https://github.com/solentairwatch/sniffy
@@ -68,8 +68,5 @@ NB script assumes that your not using virtualenv.
 
 # Important scripts
 
-- pmsx003.py           this sends PM data from the PMS1003 senosr to the opensensors.io  via MQTT
-- standalonePMS.py     as above but logs to SD instead of MQTT for offline use
-- 2_sensorAFE_v1.py    analogue gas sensor data script - needs updating from UDP 
-- bmp180.py            likewise - for the bosch BMP180 enviroment chip - needs updating from UDP 
-   
+- pmsx003.py           this sends PMS5003 and BME280 data to opensensors.io via MQTT
+- standalonePMS.py     as above but logs to SD instead of MQTT for offline use   
