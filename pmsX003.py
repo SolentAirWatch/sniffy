@@ -7,14 +7,7 @@ import json
 import csv
 from pprint import pprint  # makes data more pretty
 
-# setup onboard serial port NB RPi 3 address
-
-#token = 'SharedAccessKey=NHnpLrSbcQ4j8GEvJ60oOvHbNlQyEpSmEL8Gh0MyFRU=' 
-#username = 'sniffy.azure-devices.net/sniffy-2/api-version=2016-11-14'
-
-
-clientID = 'sniffy-6'
-monitorID = '6'  # id 0 is reserved for test
+monitorID = '2'  # id 0 is reserved for test
 monitorLocation = [50.9262, -1.4092]
 port = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2.0)
 broker = "" #"mqtt.opensensors.io"  # "46.101.13.195"     # test broker
@@ -26,19 +19,16 @@ def on_connect(client, userdata, flags, rc):
     # do nothing we're connected
     pass
 
-
 def on_publish(client, userdata, mid):
     print(mid)
     # print('published a message')
     pass
-
 
 def on_disconnect(client, userdata, rc):
     if rc !=0:
         print('unexpected disconect with code' + str(rc))
         client.reconnect()
     
-
 # function to parse a line of binary data from PMSx003 -- needs updating for python 3
 def read_pm_line(_port):
     rv = b''
@@ -51,6 +41,7 @@ def read_pm_line(_port):
                 rv += _port.read(28)
                 return rv
 
+# define a function to read env data from BME280 over i2c
 def readBME():
     temp, pres, humid = bme280.readBME280All()
     temp = round(float(temp),1)
