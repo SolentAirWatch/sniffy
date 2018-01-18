@@ -70,6 +70,3 @@ NB script assumes that your not using virtualenv.
 
 - pmsx003.py           this sends PM data from the PMS1003 senosr to the opensensors.io  via MQTT
 - standalonePMS.py     as above but logs to SD instead of MQTT for offline use
-- 2_sensorAFE_v1.py    analogue gas sensor data script - needs updating from UDP 
-- bmp180.py            likewise - for the bosch BMP180 enviroment chip - needs updating from UDP 
-   
