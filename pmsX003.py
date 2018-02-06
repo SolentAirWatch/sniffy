@@ -7,7 +7,7 @@ import json
 import csv
 from pprint import pprint  # makes data more pretty
 
-monitorID = '2'  # id 0 is reserved for test
+monitorID = '10'  # id 0 is reserved for test
 monitorLocation = [50.9262, -1.4092]
 port = serial.Serial('/dev/ttyS0', baudrate=9600, timeout=2.0)
 broker = "" #"mqtt.opensensors.io"  # "46.101.13.195"     # test broker
@@ -53,7 +53,7 @@ def readBME():
 f = open(csvFile,'a')  # open the csv file but 'a'ppend it if it already exists
 # Authenticate with opensensors.io
 client = mqtt.Client(client_id=clientID)
-client.username_pw_set("username", password="password" )
+client.username_pw_set("mqtt-user", password="mqtt-password" )
 # set up callbacks
 client.on_connect = on_connect
 client.on_publish = on_publish
