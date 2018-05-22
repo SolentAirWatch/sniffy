@@ -1,8 +1,8 @@
-# A load of old code
+# A load of old code...
 
 This repository is out of date - we're hard at work to develop a new release of Sniffy for the Solent Air Watch project by June 2018.
 
-Solent Air Watch (www.solentairwatch.co.uk) is a community project. Please help support us by suggesting improvements to our code or documentation via pull requests. B
+Solent Air Watch (www.solentairwatch.co.uk) is a community project. Please help support us by suggesting improvements to our code or documentation via pull requests.
 
 Sniffy is an air quality monitor based on the raspberry pi. It is designed to accept a number of different air quality sensors. We currently use the Plantower PMS5003 to estimate concentrations of PM1, PM2.5 and PM10. We use Alphasense's gas sensors to measure NO2.
 
