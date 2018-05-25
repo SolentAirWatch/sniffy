@@ -5,6 +5,8 @@ import datetime
 import time
 from influxdb import InfluxDBClient
 
+username = 'data'
+password = 'IReallyLikeNO2!'
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
@@ -45,6 +47,7 @@ dbclient = InfluxDBClient('localhost', 8086, 'root', 'root', 'sensordata')
 
 # Initialize the MQTT client that should connect to the Mosquitto broker
 client = mqtt.Client()
+client.username_pw_set(username, password=password)
 client.on_connect = on_connect
 client.on_message = on_message
 connOK=False
