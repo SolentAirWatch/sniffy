@@ -56,7 +56,8 @@ connOK = False
 # Try connecting, if failed try again after 2 seconds
 while(connOK == False):
     try:
-        client.connect(broker)
+        print('trying to connect to MQTT broker')
+        client.connect(host)
         connOK = True
     except:
         connOK = False
