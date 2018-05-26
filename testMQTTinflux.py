@@ -24,21 +24,24 @@ def on_message(client, userdata, msg):
     print(data["PM1"])
     num = data["PM1"]
     print(isinstance(num, float))
+    PM1 = data["PM1"]
+    PM25 =  data["PM25"]
+    PM10 =  data["PM10"],
 
     jsonData = [
         {
             "id": data["id"],
             "time": data["sendTime"],
             "fields":{
-                "PM10": data["PM10"],
-                "PM25": data["PM25"],
-                "PM1": data["PM1"]
+                "PM25": PM25,
+                "PM1":  PM1
                 }
             }
         ]
-    
-    print(str(receiveTime) + ": " + msg.topic + " " + str(data))
-    dbclient.write_points(jsonData)
+
+    pprint(jsonData)
+    # print(str(receiveTime) + ": " + msg.topic + " " + str(data))
+    # dbclient.write_points(jsonData)
         
 # Set up a client for InfluxDB
 dbclient = InfluxDBClient(host, 8086, 'root', 'root', 'sensordata')
