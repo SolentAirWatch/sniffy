@@ -10,7 +10,7 @@ from influxdb import InfluxDBClient
 topicName = "/sniffy/#"
 username = 'data'
 password = 'IReallyLikeNO2!'
-host = 'localhost'
+host = '209.97.143.180'
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
