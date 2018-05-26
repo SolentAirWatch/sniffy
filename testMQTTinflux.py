@@ -3,6 +3,8 @@
 import paho.mqtt.client as mqtt
 import datetime
 import time
+import json
+from pprint import pprint  # makes data more pretty
 from influxdb import InfluxDBClient
 
 username = 'data'
@@ -15,31 +17,34 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     print("Received a message on topic: " + msg.topic)
     # Use utc as timestamp
-    receiveTime=datetime.datetime.utcnow()
-    message=msg.payload.decode("utf-8")
+    receiveTime = datetime.datetime.utcnow()
+
+    data = json.loads(msg.payload.decode('utf-8'))  # decode the json message 
+
     isfloatValue=False
+    
+    # structure to convert strings to floats - need to do this after json
     try:
         # Convert the string to a float so that it is stored as a number and not a string in the database
-        val = float(message)
-        isfloatValue=True
+        # val = float(message)
+        # isfloatValue=True
     except:
-        print("Could not convert " + message + " to a float value")
-        isfloatValue=False
+        # print("Could not convert " + message + " to a float value")
+        # isfloatValue=False
 
     if isfloatValue:
-        print(str(receiveTime) + ": " + msg.topic + " " + str(val))
+        print(str(receiveTime) + ": " + msg.topic + " " + str(data))
 
-        json_body = [
-            {
-                "measurement": msg.topic,
-                "time": receiveTime,
-                "fields": {
-                    "value": val
-                }
-            }
-        ]
-
-        dbclient.write_points(json_body)
+#        json_body = [
+#            {
+#                "measurement": msg.topic,
+#                "time": receiveTime,
+#                "fields": {
+#                    "value": val
+#                }
+#            }
+#        ]
+        dbclient.write_points(data)
         print("Finished writing to InfluxDB")
         
 # Set up a client for InfluxDB
@@ -53,7 +58,7 @@ client.on_message = on_message
 connOK=False
 while(connOK == False):
     try:
-        client.connect("localhost", 1883, 60)
+        client.connect(broker)
         connOK = True
     except:
         connOK = False
