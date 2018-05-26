@@ -7,9 +7,8 @@ import json
 from pprint import pprint  # makes data more pretty
 from influxdb import InfluxDBClient
 
-username = 'data'
-password = 'IReallyLikeNO2!'
-host = 'localhost'
+pwrd = "IReallyLikeNO2!"
+host = 'awdrop'
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
@@ -47,7 +46,7 @@ dbclient = InfluxDBClient('localhost', 8086, 'root', 'root', 'sensordata')
 
 # Initialize the MQTT client that should connect to the Mosquitto broker
 client = mqtt.Client()
-client.username_pw_set(username, password=password)
+client.username_pw_set("data", password=pwrd)
 client.on_connect = on_connect
 client.on_message = on_message
 connOK=False
@@ -59,6 +58,7 @@ while(connOK == False):
         connOK = True
     except:
         connOK = False
+        print('failed to connect, trying again')
     time.sleep(2)
 
 # Blocking loop to the Mosquitto broker

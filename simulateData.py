@@ -9,7 +9,7 @@ from pprint import pprint  # makes data more pretty
 # setup onboard serial port NB RPi 3 address
 clientNo = "xxx"
 pwrd = "IReallyLikeNO2!"
-broker = "209.97.143.180"
+broker = "awdrop"
 monitorID = '10'  # id 0 is reserved for test
 monitorLocation = [50.9262, -1.4092]
 topic = "/sniffy/test"
@@ -45,9 +45,6 @@ client.connect(broker)  # (address, port, timeout (sec) )
 message = {
     'time': "init",
     'id': monitorID,
-    'averaging': 0,
-    'latitude': monitorLocation[0],
-    'longitude': monitorLocation[1],
     'PM1': 0,
     'PM25': 0,
     'PM10': 0}
@@ -61,11 +58,8 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
     try:
         # rcv = read_pm_line(port)
         message = {
-            'time': str(datetime.datetime.now()),
+            'sendTime': str(datetime.datetime.now()),
             'id': monitorID,
-            'latitude': monitorLocation[0],
-            'longitude': monitorLocation[1],
-            'averaging': 0,
             'PM1': 20+20*math.sin(t),
             'PM25': 20+20*math.sin((t*2)+3),
             'PM10': 20+20*math.sin((t*0.5)+4),
@@ -83,7 +77,7 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
         client.publish(topic, payload=json.dumps(message), qos=0, retain=False)
         w = csv.DictWriter(f, message.keys())
         w.writerow(message)
-        time.sleep(0.1) # wait 100 millisonds
+        time.sleep(0.5) # wait 100 millisonds
         t=t+0.1
     except KeyboardInterrupt:
         break
