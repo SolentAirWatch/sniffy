@@ -7,24 +7,23 @@ import json
 from pprint import pprint  # makes data more pretty
 from influxdb import InfluxDBClient
 
-pwrd = "IReallyLikeNO2!"
-host = 'awdrop'
+topicName = "/sniffy/#"
+username = 'data'
+password = 'IReallyLikeNO2!'
+host = 'localhost'
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
-    client.subscribe("/sniffy/#")
+    client.subscribe(topicName, qos=0)
     
 def on_message(client, userdata, msg):
     print("Received a message on topic: " + msg.topic)
     receiveTime = datetime.datetime.utcnow()  # Use utc as timestamp
     data = json.loads(msg.payload.decode('utf-8'))  # decode the json message 
-    isfloatValue=False
     #pprint(data)
     print(data["PM1"])
     num = data["PM1"]
     print(isinstance(num, float))
-
-##    cursor.execute('''INSERT INTO sniffy
 
     jsonData = [
         {
@@ -42,15 +41,18 @@ def on_message(client, userdata, msg):
     dbclient.write_points(jsonData)
         
 # Set up a client for InfluxDB
-dbclient = InfluxDBClient('localhost', 8086, 'root', 'root', 'sensordata')
+dbclient = InfluxDBClient(host, 8086, 'root', 'root', 'sensordata')
 
 # Initialize the MQTT client that should connect to the Mosquitto broker
 client = mqtt.Client()
 client.username_pw_set("data", password=pwrd)
+
+# set MQTT call back functions
 client.on_connect = on_connect
 client.on_message = on_message
-connOK=False
 
+connOK == False
+    
 # Try connecting, if failed try again after 2 seconds
 while(connOK == False):
     try:
