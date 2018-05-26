@@ -9,7 +9,7 @@ from influxdb import InfluxDBClient
 
 username = 'data'
 password = 'IReallyLikeNO2!'
-host = 'awdrop'
+host = 'localhost'
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
