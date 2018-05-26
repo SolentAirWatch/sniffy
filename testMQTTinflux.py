@@ -33,8 +33,8 @@ def on_message(client, userdata, msg):
 #                }
 #            }
 #        ]
-        dbclient.write_points(data)
-        print("Finished writing to InfluxDB")
+    dbclient.write_points(data)
+    print("Finished writing to InfluxDB")
         
 # Set up a client for InfluxDB
 dbclient = InfluxDBClient('localhost', 8086, 'root', 'root', 'sensordata')
