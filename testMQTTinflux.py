@@ -45,7 +45,7 @@ dbclient = InfluxDBClient(host, 8086, 'root', 'root', 'sensordata')
 
 # Initialize the MQTT client that should connect to the Mosquitto broker
 client = mqtt.Client()
-client.username_pw_set("data", password=pwrd)
+client.username_pw_set(username, password=password)
 
 # set MQTT call back functions
 client.on_connect = on_connect
