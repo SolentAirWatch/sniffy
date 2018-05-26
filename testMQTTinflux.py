@@ -51,7 +51,7 @@ client.username_pw_set(username, password=password)
 client.on_connect = on_connect
 client.on_message = on_message
 
-connOK == False
+connOK = False
     
 # Try connecting, if failed try again after 2 seconds
 while(connOK == False):
