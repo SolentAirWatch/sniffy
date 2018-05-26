@@ -33,7 +33,7 @@ def on_disconnect(client, userdata, rc):
 # set up objects
 f = open(csvFile,'a')  # open the csv file but 'a'ppend it if it already exists
 # Authenticate with opensensors.io
-client = mqtt.Client(client_id=clientNo)
+client = mqtt.Client()  # client_id=clientNo - not using a client number
 client.username_pw_set("data", password=pwrd)
 # set up callbacks
 client.on_connect = on_connect

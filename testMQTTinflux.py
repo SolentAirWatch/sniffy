@@ -21,18 +21,8 @@ def on_message(client, userdata, msg):
     receiveTime = datetime.datetime.utcnow()  # Use utc as timestamp
     data = json.loads(msg.payload.decode('utf-8'))  # decode the json message 
     isfloatValue=False
-    
-    # structure to convert strings to floats - need to do this after json
-    #try:
-        # Convert the string to a float so that it is stored as a number and not a string in the database
-        # val = float(message)
-        # isfloatValue=True
-    #except:
-        # print("Could not convert " + message + " to a float value")
-        # isfloatValue=False
 
-    if isfloatValue:
-        print(str(receiveTime) + ": " + msg.topic + " " + str(data))
+    print(str(receiveTime) + ": " + msg.topic + " " + str(data))
 
 #        json_body = [
 #            {
