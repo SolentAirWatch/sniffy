@@ -9,6 +9,8 @@ from influxdb import InfluxDBClient
 
 username = 'data'
 password = 'IReallyLikeNO2!'
+broker = 'localhost'
+
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
@@ -16,19 +18,16 @@ def on_connect(client, userdata, flags, rc):
     
 def on_message(client, userdata, msg):
     print("Received a message on topic: " + msg.topic)
-    # Use utc as timestamp
-    receiveTime = datetime.datetime.utcnow()
-
+    receiveTime = datetime.datetime.utcnow()  # Use utc as timestamp
     data = json.loads(msg.payload.decode('utf-8'))  # decode the json message 
-
     isfloatValue=False
     
     # structure to convert strings to floats - need to do this after json
-    try:
+    #try:
         # Convert the string to a float so that it is stored as a number and not a string in the database
         # val = float(message)
         # isfloatValue=True
-    except:
+    #except:
         # print("Could not convert " + message + " to a float value")
         # isfloatValue=False
 
