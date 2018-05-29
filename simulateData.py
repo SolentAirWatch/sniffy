@@ -3,17 +3,17 @@ import paho.mqtt.client as mqtt
 import time
 import datetime
 import json
-import csv
+import argparse
 from pprint import pprint  # makes data more pretty
 
 # setup onboard serial port NB RPi 3 address
-clientNo = "xxx"
+
+# useage - python simulateData.py -n n 
+# where n is the client id
+
 pwrd = "IReallyLikeNO2!"
 broker = "awdrop"
-monitorID = '10'  # id 0 is reserved for test
-monitorLocation = [50.9262, -1.4092]
 topic = "/sniffy/test"
-csvFile = "dummy.csv" # keep a local copy for debug
 
 def on_connect(client, userdata, rc):
     print("Connected with result code " + str(rc))
@@ -30,9 +30,20 @@ def on_disconnect(client, userdata, rc):
         print('unexpected disconect with code' + str(rc))
         client.reconnect()
 
+
+parser = argparse.ArgumentParser(description='simulation of sniffy data')
+parser.add_argument('-c', '--clientID', help='clientID number') 
+parser.add_argument('-l', '--location', help='geohash for location')
+
+args = parser.parse_args()
+
+monitorID = args.clientID
+monitorLocation = args.location
+print monitorID
+print monitorLocation
+
+
 # set up objects
-f = open(csvFile,'a')  # open the csv file but 'a'ppend it if it already exists
-# Authenticate with opensensors.io
 client = mqtt.Client()  # client_id=clientNo - not using a client number
 client.username_pw_set("data", password=pwrd)
 # set up callbacks
@@ -47,9 +58,9 @@ message = {
     'id': monitorID,
     'PM1': 0,
     'PM25': 0,
-    'PM10': 0}
-w = csv.DictWriter(f, message.keys())
-w.writeheader()
+    'PM10': 0,
+    'geohash': monitorLocation
+    }
 
 client.loop_start()  # start the network loop
 t = 0
@@ -60,9 +71,10 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
         message = {
             'sendTime': str(datetime.datetime.now()),
             'id': monitorID,
-            'PM1': 20+20*math.sin(t),
-            'PM25': 20+20*math.sin((t*2)+3),
-            'PM10': 20+20*math.sin((t*0.5)+4),
+            'PM1': 20+20*math.sin(t/60),
+            'PM25': 20+20*math.sin(((t/60)*2)+3),
+            'PM10': 20 + (20 * math.sin( ((t/60)*0.5)+4 )),
+            'geohash': monitorLocation
             #'PM10_STD': ord(rcv[10]) * 256 + ord(rcv[11]),
             #'PM25_STD': ord(rcv[12]) * 256 + ord(rcv[13]),
             #'PM100_STD': ord(rcv[14]) * 256 + ord(rcv[15]),
@@ -75,8 +87,8 @@ while True: # PMSx003 sensor by default streams data and non-uniform intervals -
             }
         pprint(message)
         client.publish(topic, payload=json.dumps(message), qos=0, retain=False)
-        w = csv.DictWriter(f, message.keys())
-        w.writerow(message)
+        #w = csv.DictWriter(f, message.keys())
+        #w.writerow(message)
         time.sleep(0.5) # wait 100 millisonds
         t=t+0.1
     except KeyboardInterrupt:
