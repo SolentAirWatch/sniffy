@@ -14,7 +14,7 @@ global cursor  # make the database handle available globally
 DB_Name = "airwatchData.db"
 topicName = "/sniffy/#"
 username = 'data'
-password = 'IReallyLikeNO2!'
+password = '***'
 host = 'awdrop'
 
 
