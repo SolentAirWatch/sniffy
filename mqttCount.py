@@ -8,8 +8,8 @@ from pprint import pprint  # makes data more pretty
 
 # setup onboard serial port NB RPi 3 address
 clientNo = "xxx"
-pwrd = "IReallyLikeNO2!"
-broker = "209.97.143.180"
+pwrd = "***"
+broker = "awdrop"
 monitorID = '10'  # id 0 is reserved for test
 monitorLocation = [50.9262, -1.4092]
 topic = "/sniffy/test"
