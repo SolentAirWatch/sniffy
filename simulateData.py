@@ -11,7 +11,7 @@ from pprint import pprint  # makes data more pretty
 # useage - python simulateData.py -n n 
 # where n is the client id
 
-pwrd = "IReallyLikeNO2!"
+pwrd = "***"
 broker = "awdrop"
 topic = "/sniffy/test"
 
