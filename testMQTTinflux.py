@@ -9,10 +9,10 @@ from influxdb import InfluxDBClient
 
 # error if field name is mispelt which causes a crash 
 topicName = "/sniffy/#"
-username = 'data'
-password = 'IReallyLikeNO2!'
+username = '****'
+password = '***'
 database = 'sniffy'
-host = '209.97.143.180'# 'localhost' #'209.97.143.180'
+host = 'localhost' #'209.97.143.180'
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
